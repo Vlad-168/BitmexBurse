@@ -1,5 +1,6 @@
 package com.example.bitmexburse;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -86,12 +87,20 @@ public class StartActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_courses) {
+            Intent courses = new Intent(StartActivity.this, StartActivity.class);
+            startActivity(courses);
 
         } else if (id == R.id.nav_news) {
+            Intent news = new Intent(StartActivity.this, NewsActivity.class);
+            startActivity(news);
 
         } else if (id == R.id.nav_graphics) {
+            Intent graphics = new Intent(StartActivity.this, GraphicsActivity.class);
+            startActivity(graphics);
 
-        } else if (id == R.id.naw_render) {
+        } else if (id == R.id.nav_render) {
+            Intent render = new Intent(StartActivity.this, RenderActivity.class);
+            startActivity(render);
 
         }
 
