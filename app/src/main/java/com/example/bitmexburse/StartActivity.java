@@ -22,16 +22,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.TextView;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class StartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,8 +45,20 @@ public class StartActivity extends AppCompatActivity
         String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
         name_of_burse.setText("Биржа на "+mydate);
         //get-request
-        
-        //Ending of my code
+        new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .build();
+
+        new Request.Builder()
+                .url("wss://www.bitmex.com/realtime/?param1=value1&param2=value2")
+                .get()
+                .header("header-1-name", "header-1-value")
+                .header("header-2-name", "header-2-value")
+                .build();
+
+        //Ending code
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
