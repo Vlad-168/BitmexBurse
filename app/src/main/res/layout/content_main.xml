@@ -92,11 +92,25 @@
             android:textColor="@android:color/holo_green_light"
             android:textSize="30dp" />
     </RelativeLayout>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/connection"
-        android:textColor="@android:color/black"/>
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="Bitcoin(XBTUSD)"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        />
+    <TextView
+        android:id="@+id/bitcoin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="30dp"
+        android:textAlignment="center"/>
 
 </LinearLayout>
