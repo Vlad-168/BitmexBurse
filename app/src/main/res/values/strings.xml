@@ -21,4 +21,8 @@
     <string name="title_activity_news">NewsActivity</string>
     <string name="title_activity_graphics">GraphicsActivity</string>
     <string name="title_activity_render">RenderActivity</string>
+
+    <string name="title_activity_loading">LoadingActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

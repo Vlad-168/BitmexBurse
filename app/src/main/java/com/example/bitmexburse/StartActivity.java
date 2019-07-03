@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.text.Html;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
@@ -43,6 +44,9 @@ import java.util.concurrent.TimeUnit;
 
 public class StartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private TimerTask timerTask;
+
     //bitcoin const
     String databit = "";
     String dataParsedbit = "";
@@ -51,6 +55,10 @@ public class StartActivity extends AppCompatActivity
     String datausd = "";
     String dataParsedusd = "";
     String singleParsedusd = "";
+    //eur const
+    String dataeur = "";
+    String dataParsedeur = "";
+    String singleParsedeur = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +69,12 @@ public class StartActivity extends AppCompatActivity
         //My code
         TextView name_of_burse = findViewById(R.id.name_of_burse);
         final TextView usd = findViewById(R.id.usd);
+        final TextView eur = findViewById(R.id.eur);
         String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
         name_of_burse.setText("Биржа на "+mydate);
         //get-request_for_bitcoin
         Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 OkHttpClient client = new OkHttpClient();
@@ -113,7 +122,7 @@ public class StartActivity extends AppCompatActivity
                 //USDDDD
 
 
-                String urlusd ="https://currate.ru/api/?get=rates&pairs=USDRUB&key=27be19e51da9131149118f1cbb82bed2";
+                String urlusd ="http://www.cbr-xml-daily.ru/daily_json.js";
                 Request requestusd = new Request.Builder()
                         .url(urlusd)
                         .build();
@@ -136,9 +145,10 @@ public class StartActivity extends AppCompatActivity
                                         JSONArray ja = new JSONArray(datausd);
                                         for (int i=0;i<ja.length();i++) {
                                             JSONObject jo = (JSONObject) ja.get(i);
-                                            JSONObject joo = (JSONObject) jo.get("data");
-                                            singleParsedusd = joo.get("USDRUB")+"";
-                                            dataParsedusd = dataParsedusd + singleParsedusd;
+                                            JSONObject joo = (JSONObject) jo.get("Valute");
+                                            JSONObject jooo = (JSONObject) joo.get("USD");
+                                            singleParsedusd = jooo.get("Value")+"";
+                                            dataParsedusd = dataParsedusd + singleParsedusd + "\u20BD";
                                         }
                                     }
                                     catch (JSONException e) {
@@ -155,11 +165,56 @@ public class StartActivity extends AppCompatActivity
                 dataParsedusd="";
                 singleParsedusd="";
 
-                
+                ///EUUUURR
+                String urleur ="http://www.cbr-xml-daily.ru/daily_json.js";
+                Request requesteur = new Request.Builder()
+                        .url(urleur)
+                        .build();
+                client.newCall(requesteur).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response responseusd) throws IOException {
+                        if (responseusd.isSuccessful()){
+                            final String myResponseusd = responseusd.body().string();
+                            StartActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dataeur = dataeur + myResponseusd;
+                                    dataeur = "["+dataeur+"]";
+                                    try {
+                                        JSONArray ja = new JSONArray(dataeur);
+                                        for (int i=0;i<ja.length();i++) {
+                                            JSONObject jo = (JSONObject) ja.get(i);
+                                            JSONObject joo = (JSONObject) jo.get("Valute");
+                                            JSONObject jooo = (JSONObject) joo.get("EUR");
+                                            singleParsedeur = jooo.get("Value")+"";
+                                            dataParsedeur = dataParsedeur + singleParsedeur+"\u20BD";
+                                        }
+                                    }
+                                    catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    eur.setText("");
+                                    eur.setText(dataParsedeur);
+                                }
+                            });
+                        }
+                    }
+                });
+                dataeur="";
+                dataParsedeur="";
+                singleParsedeur="";
+
+
+
 
             }
         };
-        timer.schedule(timerTask,0,1000);
+        timer.schedule(timerTask,0,100000);
         //Endinggetrequest_bitcoin
         //https://currate.ru/api/?get=rates&pairs=USDRUB&key=92b43dfd78329b5554d0e5471b4b6d0c
 
@@ -207,6 +262,12 @@ public class StartActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        timerTask.cancel();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

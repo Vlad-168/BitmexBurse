@@ -13,6 +13,12 @@ import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,15 +26,23 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GraphicsActivity extends AppCompatActivity {
     String[] data = {"EUR", "USD", "RUB"};
     LineChartView lineChartView;
-    String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
-            "Oct", "Nov", "Dec"};
-    int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+    String[] axisData = {"1","2","3","4","5","6","7","8","9","10","11"};
+    List<Float> yAxisData = new ArrayList<>();
+    String databit="";
+    String singleParsedbit="";
+    String dataParsedbit="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +69,67 @@ public class GraphicsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 if (position == 0){//EUR
+                    //
+                    //https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=30
+                    OkHttpClient client = new OkHttpClient();
+
+                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=5";
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            if (response.isSuccessful()){
+                                final String myResponse = response.body().string();
+                                GraphicsActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        databit = databit + myResponse;
+
+                                        try {
+                                            JSONArray ja = new JSONArray(databit);
+                                            for (int i=0;i<ja.length();i++) {
+                                                JSONObject jo = (JSONObject) ja.get(i);
+                                                singleParsedbit = jo.get("price")+"";
+                                                dataParsedbit = dataParsedbit + singleParsedbit;
+                                                //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
+                                                Float result  = Float.valueOf(singleParsedbit);
+                                                Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                                                yAxisData.add(result);
+
+
+
+                                            }
+                                        }
+                                        catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    databit="";
+                    dataParsedbit="";
+                    singleParsedbit="";
+
                     Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
 
                     for (int i = 0; i < axisData.length; i++) {
-                        axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+                        axisValues.add(i, new AxisValue(i).setLabel(String.valueOf(axisData[i])));
                     }
 
-                    for (int i = 0; i < yAxisData.length; i++) {
-                        yAxisValues.add(new PointValue(i, yAxisData[i]));
+                    for (int i = 0; i < yAxisData.size(); i++) {
+                        yAxisValues.add(new PointValue(i, yAxisData.get(i)));
+
+
                     }
 
                     List lines = new ArrayList();
@@ -85,7 +152,7 @@ public class GraphicsActivity extends AppCompatActivity {
 
                     lineChartView.setLineChartData(data);
                     Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-                    viewport.top = 110;
+                    viewport.top = 2000;
                     lineChartView.setMaximumViewport(viewport);
                     lineChartView.setCurrentViewport(viewport);
 
