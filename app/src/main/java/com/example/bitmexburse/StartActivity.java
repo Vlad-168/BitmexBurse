@@ -47,7 +47,7 @@ public class StartActivity extends AppCompatActivity
 
     private TimerTask timerTask;
 
-    //bitcoin const
+    //xbt const
     String databit = "";
     String dataParsedbit = "";
     String singleParsedbit = "";
@@ -59,13 +59,28 @@ public class StartActivity extends AppCompatActivity
     String dataeur = "";
     String dataParsedeur = "";
     String singleParsedeur = "";
+    //xbtu19 const
+    String databit19="";
+    String dataParsedbit19="";
+    String singleParsedbit19="";
+    //xbtz19
+    String databitz19="";
+    String dataParsedbitz19="";
+    String singleParsedbitz19="";
+    //xbt7_u105
+    String databit105="";
+    String dataParsedbit105="";
+    String singleParsedbit105="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final TextView bitcoin = findViewById(R.id.bitcoin);
+        final TextView xbt = findViewById(R.id.xbt);
+        final TextView xbtu19 = findViewById(R.id.xbtu19);
+        final TextView xbtz19 = findViewById(R.id.xbtz19);
+        final TextView xbt7_u105 = findViewById(R.id.xbt7_u105);
         //My code
         TextView name_of_burse = findViewById(R.id.name_of_burse);
         final TextView usd = findViewById(R.id.usd);
@@ -77,6 +92,7 @@ public class StartActivity extends AppCompatActivity
         timerTask = new TimerTask() {
             @Override
             public void run() {
+                //XBT
                 OkHttpClient client = new OkHttpClient();
 
                 String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=1";
@@ -109,8 +125,8 @@ public class StartActivity extends AppCompatActivity
                                         catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                                    bitcoin.setText("");
-                                    bitcoin.setText(dataParsedbit);
+                                    xbt.setText("");
+                                    xbt.setText(dataParsedbit);
                                     }
                                 });
                             }
@@ -119,6 +135,130 @@ public class StartActivity extends AppCompatActivity
                 databit="";
                 dataParsedbit="";
                 singleParsedbit="";
+                //XBTU19
+
+                String url19 ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTU19&depth=1";
+                Request request19 = new Request.Builder()
+                        .url(url19)
+                        .build();
+                client.newCall(request19).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()){
+                            final String myResponse = response.body().string();
+                            StartActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    databit19 = databit19 + myResponse;
+
+                                    try {
+                                        JSONArray ja = new JSONArray(databit19);
+                                        for (int i=0;i<ja.length()-1;i++) {
+                                            JSONObject jo = (JSONObject) ja.get(i);
+                                            singleParsedbit19 = jo.get("price")+"";
+                                            dataParsedbit19 = dataParsedbit19 + singleParsedbit19+"$";
+                                        }
+                                    }
+                                    catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    xbtu19.setText("");
+                                    xbtu19.setText(dataParsedbit19);
+                                }
+                            });
+                        }
+                    }
+                });
+                databit19="";
+                dataParsedbit19="";
+                singleParsedbit19="";
+                //XBTZ19
+                String urlz19 ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTZ19&depth=1";
+                Request requestz19 = new Request.Builder()
+                        .url(urlz19)
+                        .build();
+                client.newCall(requestz19).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()){
+                            final String myResponse = response.body().string();
+                            StartActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    databitz19 = databitz19 + myResponse;
+
+                                    try {
+                                        JSONArray ja = new JSONArray(databitz19);
+                                        for (int i=0;i<ja.length()-1;i++) {
+                                            JSONObject jo = (JSONObject) ja.get(i);
+                                            singleParsedbitz19 = jo.get("price")+"";
+                                            dataParsedbitz19 = dataParsedbitz19 + singleParsedbitz19+"$";
+                                        }
+                                    }
+                                    catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    xbtz19.setText("");
+                                    xbtz19.setText(dataParsedbitz19);
+                                }
+                            });
+                        }
+                    }
+                });
+                databitz19="";
+                dataParsedbitz19="";
+                singleParsedbitz19="";
+                //XBT7D_U105
+                String url105 ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBT7D_U105&depth=1";
+                Request request105 = new Request.Builder()
+                        .url(url105)
+                        .build();
+                client.newCall(request105).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()){
+                            final String myResponse = response.body().string();
+                            StartActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    databit105 = databit105 + myResponse;
+
+                                    try {
+                                        JSONArray ja = new JSONArray(databit105);
+                                        for (int i=0;i<ja.length()-1;i++) {
+                                            JSONObject jo = (JSONObject) ja.get(i);
+                                            singleParsedbit105 = jo.get("price")+"";
+                                            dataParsedbit105 = dataParsedbit105 + singleParsedbit105+"$";
+                                        }
+                                    }
+                                    catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    xbt7_u105.setText("");
+                                    xbt7_u105.setText(dataParsedbit105);
+                                }
+                            });
+                        }
+                    }
+                });
+                databit105="";
+                dataParsedbit105="";
+                singleParsedbit105="";
                 //USDDDD
 
 

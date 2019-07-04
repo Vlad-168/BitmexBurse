@@ -8,6 +8,13 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".StartActivity"
     tools:showIn="@layout/app_bar_main">
+    <TextView
+        android:id="@+id/name_of_burse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="20dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +24,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="75dp"
+            android:layout_alignParentLeft="true"
+            android:textAlignment="center"
             android:layout_toLeftOf="@+id/divider"
             android:gravity="center"
             android:text="EUR"
@@ -33,9 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="75dp"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="51dp"
+            android:textAlignment="center"
             android:layout_toEndOf="@+id/divider"
             android:layout_toRightOf="@+id/divider"
             android:text="USD"
@@ -43,14 +49,6 @@
             android:textSize="30dp" />
 
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/name_of_burse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@android:color/black"
-        android:textSize="20dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -60,12 +58,12 @@
             android:id="@+id/eur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="75dp"
             android:layout_toLeftOf="@+id/divider2"
-            android:gravity="center"
+            android:layout_alignParentStart="true"
             android:text=""
             android:textColor="@android:color/holo_green_light"
-            android:textSize="20dp" />
+            android:textSize="35dp"
+            android:layout_alignParentLeft="true" />
         <Space
             android:id="@+id/divider2"
             android:layout_width="0dp"
@@ -75,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="|"
-            android:textSize="30dp"
+            android:textSize="35dp"
             android:textColor="@android:color/white"
             android:layout_centerHorizontal="true"/>
         <TextView
@@ -83,34 +81,179 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="75dp"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="51dp"
             android:layout_toEndOf="@+id/divider2"
             android:layout_toRightOf="@+id/divider2"
+            android:textAlignment="viewEnd"
             android:text=""
             android:textColor="@android:color/holo_green_light"
-            android:textSize="20dp" />
+            android:textSize="35dp"
+            android:gravity="end" />
     </RelativeLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"/>
+        android:textSize="15dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:text="Bitcoin(XBTUSD)"
-        android:textSize="30dp"
-        android:textAlignment="center"
-        />
-    <TextView
-        android:id="@+id/bitcoin"
+        android:text="Bitcoin(Bitmex.com)"
+        android:textSize="35dp"
+        android:textAlignment="center"/>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@android:color/holo_green_light"
-        android:textSize="30dp"
-        android:textAlignment="center"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textAlignment="center"
+            android:layout_toLeftOf="@+id/divider3"
+            android:gravity="center"
+            android:text="XBT"
+            android:textColor="@android:color/white"
+            android:textSize="30dp" />
+        <Space
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textAlignment="center"
+            android:layout_toEndOf="@+id/divider3"
+            android:layout_toRightOf="@+id/divider3"
+            android:text="XBTU19"
+            android:textColor="@android:color/white"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/xbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/divider4"
+            android:layout_alignParentStart="true"
+            android:text=""
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="35dp"
+            android:layout_alignParentLeft="true" />
+        <Space
+            android:id="@+id/divider4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|"
+            android:textSize="35dp"
+            android:textColor="@android:color/white"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/xbtu19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/divider4"
+            android:textAlignment="viewEnd"
+            android:layout_toRightOf="@+id/divider4"
+            android:text=""
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="35dp"
+            android:layout_gravity="end" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textAlignment="center"
+            android:layout_toLeftOf="@+id/divider5"
+            android:gravity="center"
+            android:text="XBTZ19"
+            android:textColor="@android:color/white"
+            android:textSize="30dp" />
+        <Space
+            android:id="@+id/divider5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textAlignment="center"
+            android:layout_toEndOf="@+id/divider5"
+            android:layout_toRightOf="@+id/divider5"
+            android:text="XBT7D_U105"
+            android:textColor="@android:color/white"
+            android:textSize="30dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/xbtz19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/divider6"
+            android:layout_alignParentStart="true"
+            android:text=""
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="35dp"
+            android:layout_alignParentLeft="true" />
+        <Space
+            android:id="@+id/divider6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|"
+            android:textSize="35dp"
+            android:textColor="@android:color/white"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/xbt7_u105"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/divider6"
+            android:textAlignment="viewEnd"
+            android:layout_toRightOf="@+id/divider6"
+            android:text=""
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="35dp"
+            android:layout_gravity="end" />
+    </RelativeLayout>
+
+
+
 
 </LinearLayout>

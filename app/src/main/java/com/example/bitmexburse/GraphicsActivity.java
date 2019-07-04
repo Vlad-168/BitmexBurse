@@ -1,8 +1,15 @@
 package com.example.bitmexburse;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +30,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,15 +42,42 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class GraphicsActivity extends AppCompatActivity {
-    String[] data = {"EUR", "USD", "RUB"};
-    LineChartView lineChartView;
-    String[] axisData = {"1","2","3","4","5","6","7","8","9","10","11"};
-    List<Float> yAxisData = new ArrayList<>();
+    String[] data = {"XBT", "XBTU19", "XBTZ19", "XBT7D_U105"};
+
+    ArrayList<String> xAxisData = new ArrayList<>();
+    ArrayList<Entry> yAxisData = new ArrayList<>();
+    ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
+
     String databit="";
     String singleParsedbit="";
     String dataParsedbit="";
+
+    ArrayList<String> xAxisData19 = new ArrayList<>();
+    ArrayList<Entry> yAxisData19 = new ArrayList<>();
+    ArrayList<ILineDataSet> lineDataSets19 = new ArrayList<>();
+
+    String databit19="";
+    String singleParsedbit19="";
+    String dataParsedbit19="";
+
+    ArrayList<String> xAxisDataz19 = new ArrayList<>();
+    ArrayList<Entry> yAxisDataz19 = new ArrayList<>();
+    ArrayList<ILineDataSet> lineDataSetsz19 = new ArrayList<>();
+
+    String databitz19="";
+    String singleParsedbitz19="";
+    String dataParsedbitz19="";
+
+    ArrayList<String> xAxisData105 = new ArrayList<>();
+    ArrayList<Entry> yAxisData105 = new ArrayList<>();
+    ArrayList<ILineDataSet> lineDataSets105 = new ArrayList<>();
+
+    String databit105="";
+    String singleParsedbit105="";
+    String dataParsedbit105="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +87,9 @@ public class GraphicsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        lineChartView = findViewById(R.id.chart);
+        final LineChart linechart = findViewById(R.id.linechart);
 
-        final List yAxisValues = new ArrayList();
-        final List axisValues = new ArrayList();
+
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
@@ -68,12 +102,13 @@ public class GraphicsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                if (position == 0){//EUR
+                //XBT
+                if (position == 0){
                     //
                     //https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=30
                     OkHttpClient client = new OkHttpClient();
 
-                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=5";
+                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=10";
                     Request request = new Request.Builder()
                             .url(url)
                             .build();
@@ -94,14 +129,16 @@ public class GraphicsActivity extends AppCompatActivity {
 
                                         try {
                                             JSONArray ja = new JSONArray(databit);
-                                            for (int i=0;i<ja.length();i++) {
+                                            for (int i=0;i<ja.length()/2;i++) {
                                                 JSONObject jo = (JSONObject) ja.get(i);
                                                 singleParsedbit = jo.get("price")+"";
                                                 dataParsedbit = dataParsedbit + singleParsedbit;
                                                 //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
                                                 Float result  = Float.valueOf(singleParsedbit);
                                                 Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
-                                                yAxisData.add(result);
+                                                yAxisData.add(new Entry(result, i+1));
+                                                String index = String.valueOf(i+1);
+                                                xAxisData.add(index);
 
 
 
@@ -120,45 +157,248 @@ public class GraphicsActivity extends AppCompatActivity {
                     dataParsedbit="";
                     singleParsedbit="";
 
-                    Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
+                    String[] xaxes = new String[xAxisData.size()];
 
-                    for (int i = 0; i < axisData.length; i++) {
-                        axisValues.add(i, new AxisValue(i).setLabel(String.valueOf(axisData[i])));
+                    for (int i=0;i<xAxisData.size();i++){
+                        xaxes[i] = xAxisData.get(i).toString();
                     }
 
-                    for (int i = 0; i < yAxisData.size(); i++) {
-                        yAxisValues.add(new PointValue(i, yAxisData.get(i)));
+                    LineDataSet lineDataSet = new LineDataSet(yAxisData, "XBT");
+                    lineDataSet.setDrawCircles(true);
+                    lineDataSet.setColor(Color.GREEN);
+
+                    lineDataSets.add(lineDataSet);
+
+                    linechart.setData(new LineData(xaxes, lineDataSets));
+
+                    linechart.setVisibleXRangeMaximum(12000f);
+                    linechart.setTouchEnabled(true);
+                    linechart.setDragEnabled(true);
 
 
+
+
+
+
+                }
+                //XBTU19
+                if (position == 1){//XBTU19
+                    OkHttpClient client = new OkHttpClient();
+
+                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTU19&depth=10";
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            if (response.isSuccessful()){
+                                final String myResponse = response.body().string();
+                                GraphicsActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        databit19 = databit19 + myResponse;
+
+                                        try {
+                                            JSONArray ja = new JSONArray(databit19);
+                                            for (int i=0;i<ja.length()/2;i++) {
+                                                JSONObject jo = (JSONObject) ja.get(i);
+                                                singleParsedbit19 = jo.get("price")+"";
+                                                dataParsedbit19 = dataParsedbit19 + singleParsedbit19;
+                                                //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
+                                                Float result  = Float.valueOf(singleParsedbit19);
+                                                Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                                                yAxisData19.add(new Entry(result, i+1));
+                                                String index = String.valueOf(i+1);
+                                                xAxisData19.add(index);
+
+
+
+                                            }
+                                        }
+                                        catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    databit19="";
+                    dataParsedbit19="";
+                    singleParsedbit19="";
+
+                    String[] xaxes = new String[xAxisData19.size()];
+
+                    for (int i=0;i<xAxisData19.size();i++){
+                        xaxes[i] = xAxisData19.get(i).toString();
                     }
 
-                    List lines = new ArrayList();
-                    lines.add(line);
+                    LineDataSet lineDataSet = new LineDataSet(yAxisData19, "XBTU19");
+                    lineDataSet.setDrawCircles(true);
+                    lineDataSet.setColor(Color.RED);
 
-                    LineChartData data = new LineChartData();
-                    data.setLines(lines);
+                    lineDataSets19.add(lineDataSet);
 
-                    Axis axis = new Axis();
-                    axis.setValues(axisValues);
-                    axis.setTextSize(16);
-                    axis.setTextColor(Color.parseColor("#03A9F4"));
-                    data.setAxisXBottom(axis);
+                    linechart.setData(new LineData(xaxes, lineDataSets19));
 
-                    Axis yAxis = new Axis();
-                    yAxis.setName("Sales in millions");
-                    yAxis.setTextColor(Color.parseColor("#03A9F4"));
-                    yAxis.setTextSize(16);
-                    data.setAxisYLeft(yAxis);
+                    linechart.setVisibleXRangeMaximum(13000f);
+                    linechart.setTouchEnabled(true);
+                    linechart.setDragEnabled(true);
 
-                    lineChartView.setLineChartData(data);
-                    Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-                    viewport.top = 2000;
-                    lineChartView.setMaximumViewport(viewport);
-                    lineChartView.setCurrentViewport(viewport);
 
-                } else if (position == 1){//USD
 
-                } else if (position == 2){//RUB
+
+                }
+                //XBTZ19
+                if (position == 2){
+                    OkHttpClient client = new OkHttpClient();
+
+                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTZ19&depth=10";
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            if (response.isSuccessful()){
+                                final String myResponse = response.body().string();
+                                GraphicsActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        databitz19 = databitz19 + myResponse;
+
+                                        try {
+                                            JSONArray ja = new JSONArray(databitz19);
+                                            for (int i=0;i<ja.length()/2;i++) {
+                                                JSONObject jo = (JSONObject) ja.get(i);
+                                                singleParsedbitz19 = jo.get("price")+"";
+                                                dataParsedbitz19 = dataParsedbitz19 + singleParsedbitz19;
+                                                //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
+                                                Float result  = Float.valueOf(singleParsedbitz19);
+                                                Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                                                yAxisDataz19.add(new Entry(result, i+1));
+                                                String index = String.valueOf(i+1);
+                                                xAxisDataz19.add(index);
+
+
+
+                                            }
+                                        }
+                                        catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    databitz19="";
+                    dataParsedbitz19="";
+                    singleParsedbitz19="";
+
+                    String[] xaxes = new String[xAxisDataz19.size()];
+
+                    for (int i=0;i<xAxisDataz19.size();i++){
+                        xaxes[i] = xAxisDataz19.get(i).toString();
+                    }
+
+                    LineDataSet lineDataSet = new LineDataSet(yAxisDataz19, "XBTZ19");
+                    lineDataSet.setDrawCircles(true);
+                    lineDataSet.setColor(Color.BLUE);
+
+                    lineDataSetsz19.add(lineDataSet);
+
+                    linechart.setData(new LineData(xaxes, lineDataSetsz19));
+
+                    linechart.setVisibleXRangeMaximum(14000f);
+                    linechart.setTouchEnabled(true);
+                    linechart.setDragEnabled(true);
+
+
+                }
+                //XBT7D_U105
+                if (position == 3){
+                    OkHttpClient client = new OkHttpClient();
+
+                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBT7D_U105&depth=10";
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            if (response.isSuccessful()){
+                                final String myResponse = response.body().string();
+                                GraphicsActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        databit105 = databit105 + myResponse;
+
+                                        try {
+                                            JSONArray ja = new JSONArray(databit105);
+                                            for (int i=0;i<ja.length()/2;i++) {
+                                                JSONObject jo = (JSONObject) ja.get(i);
+                                                singleParsedbit105 = jo.get("price")+"";
+                                                dataParsedbit105 = dataParsedbit105 + singleParsedbit105;
+                                                //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
+                                                Float result  = Float.valueOf(singleParsedbit105);
+                                                Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                                                yAxisData105.add(new Entry(result, i+1));
+                                                String index = String.valueOf(i+1);
+                                                xAxisData105.add(index);
+
+
+
+                                            }
+                                        }
+                                        catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    databit105="";
+                    dataParsedbit105="";
+                    singleParsedbit105="";
+
+                    String[] xaxes = new String[xAxisData105.size()];
+
+                    for (int i=0;i<xAxisData105.size();i++){
+                        xaxes[i] = xAxisData105.get(i).toString();
+                    }
+
+                    LineDataSet lineDataSet = new LineDataSet(yAxisData105, "XBT7D_U105");
+                    lineDataSet.setDrawCircles(true);
+                    lineDataSet.setColor(Color.YELLOW);
+
+                    lineDataSets105.add(lineDataSet);
+
+                    linechart.setData(new LineData(xaxes, lineDataSets105));
+
+                    linechart.setVisibleXRangeMaximum(1f);
+                    linechart.setTouchEnabled(true);
+                    linechart.setDragEnabled(true);
 
                 }
 

@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_courses"
-
+            android:icon="@mipmap/ic_launcher_usdforeground"
             android:title="@string/menu_coureses" />
         <item
             android:id="@+id/nav_news"
-
+            android:icon="@mipmap/ic_launcher_foreground"
             android:title="@string/menu_news" />
         <item
             android:id="@+id/nav_graphics"
-
+            android:icon="@mipmap/ic_launcher_chatrsforeground"
             android:title="@string/menu_graphics" />
         <item
             android:id="@+id/nav_render"
-
+            android:icon="@mipmap/ic_launcher_render_foreground"
             android:title="@string/menu_render" />
     </group>
 
