@@ -9,19 +9,14 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#00BFFF"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="@android:color/black" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:theme="@style/AppTheme.AppBarOverlay"/>
 
     <include layout="@layout/content_news" />
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="53dp"
+        android:layout_height="59dp"
+        app:srcCompat="@drawable/menu_icon" />
 
 
 

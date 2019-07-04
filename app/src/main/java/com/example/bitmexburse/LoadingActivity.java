@@ -13,15 +13,25 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class LoadingActivity extends AppCompatActivity {
     private static  int SLASH_TIME_OUT = 5000;
+    ProgressBar progressBar;
+    TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_loading);
+        progressBar = findViewById(R.id.progressbar);
+        textView = findViewById(R.id.textView);
+        progressBar.setMax(100);
+        progressBar.setScaleY(3f);
+        progressAnimation();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -34,5 +44,12 @@ public class LoadingActivity extends AppCompatActivity {
 
 
     }
+
+    public void progressAnimation(){
+        ProgressBarAnimation anim = new ProgressBarAnimation(this,progressBar, textView, 0f, 100f);
+        anim.setDuration(SLASH_TIME_OUT);
+        progressBar.setAnimation(anim);
+    }
+
 
 }

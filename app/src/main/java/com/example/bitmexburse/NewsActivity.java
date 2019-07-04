@@ -20,26 +20,10 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-class SimpleWebViewClientImpl1 extends WebViewClient {
 
-    private Activity activity = null;
-
-    public SimpleWebViewClientImpl1(Activity activity) {
-        this.activity = activity;
-    }
-
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-        if (url.contains("blog.bitmex.com")) {
-            return false;
-        }
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        activity.startActivity(intent);
-        return true;
-    }
-}
 public class NewsActivity extends AppCompatActivity {
     ImageButton btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,18 +36,18 @@ public class NewsActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent menu = new Intent(NewsActivity.this ,StartActivity.class);
+                Intent menu = new Intent(NewsActivity.this, StartActivity.class);
                 startActivity(menu);
             }
         });
         WebView web = findViewById(R.id.webview);
-
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        SimpleWebViewClientImpl1 webViewClient1 = new SimpleWebViewClientImpl1(this);
-        web.setWebViewClient(webViewClient1);
+        SimpleWebViewClientImpl simpleWebViewClient = new SimpleWebViewClientImpl(this);
+        web.setWebViewClient(simpleWebViewClient);
         web.loadUrl("https://blog.bitmex.com");
+
     }
 
 }

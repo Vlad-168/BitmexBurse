@@ -88,9 +88,211 @@ public class GraphicsActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         final LineChart linechart = findViewById(R.id.linechart);
+        //Valutes
+        //XBT
+        OkHttpClient client = new OkHttpClient();
+
+        String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=10";
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    final String myResponse = response.body().string();
+                    GraphicsActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            databit = databit + myResponse;
+
+                            try {
+                                JSONArray ja = new JSONArray(databit);
+                                for (int i=0;i<ja.length()/2;i++) {
+                                    JSONObject jo = (JSONObject) ja.get(i);
+                                    singleParsedbit = jo.get("price")+"";
+                                    dataParsedbit = dataParsedbit + singleParsedbit;
+                                    //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
+                                    Float result  = Float.valueOf(singleParsedbit);
+                                    //Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                                    yAxisData.add(new Entry(result, i+1));
+                                    String index = String.valueOf(i+1);
+                                    xAxisData.add(index);
 
 
 
+                                }
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
+        databit="";
+        dataParsedbit="";
+        singleParsedbit="";
+        Toast.makeText(this, "XBT LOADED", Toast.LENGTH_SHORT).show();
+        //XBTU19
+        String urlxbtu19 ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTU19&depth=10";
+        Request request19 = new Request.Builder()
+                .url(urlxbtu19)
+                .build();
+        client.newCall(request19).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    final String myResponse = response.body().string();
+                    GraphicsActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            databit19 = databit19 + myResponse;
+
+                            try {
+                                JSONArray ja = new JSONArray(databit19);
+                                for (int i=0;i<ja.length()/2;i++) {
+                                    JSONObject jo = (JSONObject) ja.get(i);
+                                    singleParsedbit19 = jo.get("price")+"";
+                                    dataParsedbit19 = dataParsedbit19 + singleParsedbit19;
+                                    //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
+                                    Float result  = Float.valueOf(singleParsedbit19);
+                                    //Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                                    yAxisData19.add(new Entry(result, i+1));
+                                    String index = String.valueOf(i+1);
+                                    xAxisData19.add(index);
+
+
+
+                                }
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
+        databit19="";
+        dataParsedbit19="";
+        singleParsedbit19="";
+        Toast.makeText(this, "XBTU19 LOADED", Toast.LENGTH_SHORT).show();
+        //
+        String urlz ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTZ19&depth=10";
+        Request requestz = new Request.Builder()
+                .url(urlz)
+                .build();
+        client.newCall(requestz).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    final String myResponse = response.body().string();
+                    GraphicsActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            databitz19 = databitz19 + myResponse;
+
+                            try {
+                                JSONArray ja = new JSONArray(databitz19);
+                                for (int i=0;i<ja.length()/2;i++) {
+                                    JSONObject jo = (JSONObject) ja.get(i);
+                                    singleParsedbitz19 = jo.get("price")+"";
+                                    dataParsedbitz19 = dataParsedbitz19 + singleParsedbitz19;
+                                    //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
+                                    Float result  = Float.valueOf(singleParsedbitz19);
+                                    //Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                                    yAxisDataz19.add(new Entry(result, i+1));
+                                    String index = String.valueOf(i+1);
+                                    xAxisDataz19.add(index);
+
+
+
+                                }
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
+        databitz19="";
+        dataParsedbitz19="";
+        singleParsedbitz19="";
+        Toast.makeText(this, "XBTZ19 LOADED", Toast.LENGTH_SHORT).show();
+        //
+        String url105 ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBT7D_U105&depth=10";
+        Request request105 = new Request.Builder()
+                .url(url105)
+                .build();
+        client.newCall(request105).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    final String myResponse = response.body().string();
+                    GraphicsActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            databit105 = databit105 + myResponse;
+
+                            try {
+                                JSONArray ja = new JSONArray(databit105);
+                                for (int i=0;i<ja.length()/2;i++) {
+                                    JSONObject jo = (JSONObject) ja.get(i);
+                                    singleParsedbit105 = jo.get("price")+"";
+                                    dataParsedbit105 = dataParsedbit105 + singleParsedbit105;
+                                    //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
+                                    Float result  = Float.valueOf(singleParsedbit105);
+                                    //Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                                    yAxisData105.add(new Entry(result, i+1));
+                                    String index = String.valueOf(i+1);
+                                    xAxisData105.add(index);
+
+
+
+                                }
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
+        databit105="";
+        dataParsedbit105="";
+        singleParsedbit105="";
+        Toast.makeText(this, "XB7D_U105 LOADED", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Success! All info loaded!", Toast.LENGTH_SHORT).show();
+        //Spinner
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
         // заголовок
@@ -102,61 +304,10 @@ public class GraphicsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                //XBT
+
                 if (position == 0){
                     //
                     //https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=30
-                    OkHttpClient client = new OkHttpClient();
-
-                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTUSD&depth=10";
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .build();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            if (response.isSuccessful()){
-                                final String myResponse = response.body().string();
-                                GraphicsActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        databit = databit + myResponse;
-
-                                        try {
-                                            JSONArray ja = new JSONArray(databit);
-                                            for (int i=0;i<ja.length()/2;i++) {
-                                                JSONObject jo = (JSONObject) ja.get(i);
-                                                singleParsedbit = jo.get("price")+"";
-                                                dataParsedbit = dataParsedbit + singleParsedbit;
-                                                //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
-                                                Float result  = Float.valueOf(singleParsedbit);
-                                                Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
-                                                yAxisData.add(new Entry(result, i+1));
-                                                String index = String.valueOf(i+1);
-                                                xAxisData.add(index);
-
-
-
-                                            }
-                                        }
-                                        catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    databit="";
-                    dataParsedbit="";
-                    singleParsedbit="";
-
                     String[] xaxes = new String[xAxisData.size()];
 
                     for (int i=0;i<xAxisData.size();i++){
@@ -181,59 +332,8 @@ public class GraphicsActivity extends AppCompatActivity {
 
 
                 }
-                //XBTU19
+
                 if (position == 1){//XBTU19
-                    OkHttpClient client = new OkHttpClient();
-
-                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTU19&depth=10";
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .build();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            if (response.isSuccessful()){
-                                final String myResponse = response.body().string();
-                                GraphicsActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        databit19 = databit19 + myResponse;
-
-                                        try {
-                                            JSONArray ja = new JSONArray(databit19);
-                                            for (int i=0;i<ja.length()/2;i++) {
-                                                JSONObject jo = (JSONObject) ja.get(i);
-                                                singleParsedbit19 = jo.get("price")+"";
-                                                dataParsedbit19 = dataParsedbit19 + singleParsedbit19;
-                                                //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
-                                                Float result  = Float.valueOf(singleParsedbit19);
-                                                Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
-                                                yAxisData19.add(new Entry(result, i+1));
-                                                String index = String.valueOf(i+1);
-                                                xAxisData19.add(index);
-
-
-
-                                            }
-                                        }
-                                        catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    databit19="";
-                    dataParsedbit19="";
-                    singleParsedbit19="";
-
                     String[] xaxes = new String[xAxisData19.size()];
 
                     for (int i=0;i<xAxisData19.size();i++){
@@ -258,57 +358,6 @@ public class GraphicsActivity extends AppCompatActivity {
                 }
                 //XBTZ19
                 if (position == 2){
-                    OkHttpClient client = new OkHttpClient();
-
-                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBTZ19&depth=10";
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .build();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            if (response.isSuccessful()){
-                                final String myResponse = response.body().string();
-                                GraphicsActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        databitz19 = databitz19 + myResponse;
-
-                                        try {
-                                            JSONArray ja = new JSONArray(databitz19);
-                                            for (int i=0;i<ja.length()/2;i++) {
-                                                JSONObject jo = (JSONObject) ja.get(i);
-                                                singleParsedbitz19 = jo.get("price")+"";
-                                                dataParsedbitz19 = dataParsedbitz19 + singleParsedbitz19;
-                                                //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
-                                                Float result  = Float.valueOf(singleParsedbitz19);
-                                                Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
-                                                yAxisDataz19.add(new Entry(result, i+1));
-                                                String index = String.valueOf(i+1);
-                                                xAxisDataz19.add(index);
-
-
-
-                                            }
-                                        }
-                                        catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    databitz19="";
-                    dataParsedbitz19="";
-                    singleParsedbitz19="";
-
                     String[] xaxes = new String[xAxisDataz19.size()];
 
                     for (int i=0;i<xAxisDataz19.size();i++){
@@ -331,57 +380,6 @@ public class GraphicsActivity extends AppCompatActivity {
                 }
                 //XBT7D_U105
                 if (position == 3){
-                    OkHttpClient client = new OkHttpClient();
-
-                    String url ="https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBT7D_U105&depth=10";
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .build();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            if (response.isSuccessful()){
-                                final String myResponse = response.body().string();
-                                GraphicsActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        databit105 = databit105 + myResponse;
-
-                                        try {
-                                            JSONArray ja = new JSONArray(databit105);
-                                            for (int i=0;i<ja.length()/2;i++) {
-                                                JSONObject jo = (JSONObject) ja.get(i);
-                                                singleParsedbit105 = jo.get("price")+"";
-                                                dataParsedbit105 = dataParsedbit105 + singleParsedbit105;
-                                                //Toast.makeText(GraphicsActivity.this, ""+singleParsedbit, Toast.LENGTH_SHORT).show();
-                                                Float result  = Float.valueOf(singleParsedbit105);
-                                                Toast.makeText(GraphicsActivity.this, ""+result, Toast.LENGTH_SHORT).show();
-                                                yAxisData105.add(new Entry(result, i+1));
-                                                String index = String.valueOf(i+1);
-                                                xAxisData105.add(index);
-
-
-
-                                            }
-                                        }
-                                        catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    databit105="";
-                    dataParsedbit105="";
-                    singleParsedbit105="";
-
                     String[] xaxes = new String[xAxisData105.size()];
 
                     for (int i=0;i<xAxisData105.size();i++){
