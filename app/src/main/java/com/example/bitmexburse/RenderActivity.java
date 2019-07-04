@@ -12,9 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 class SimpleWebViewClientImpl extends WebViewClient {
 
@@ -35,14 +39,23 @@ class SimpleWebViewClientImpl extends WebViewClient {
     }
 }
 public class RenderActivity extends AppCompatActivity {
-
+    ImageButton btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_render);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        btn = findViewById(R.id.imageButton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent menu = new Intent(RenderActivity.this ,StartActivity.class);
+                startActivity(menu);
+            }
+        });
         WebView web = findViewById(R.id.webview);
 
         WebSettings webSettings = web.getSettings();

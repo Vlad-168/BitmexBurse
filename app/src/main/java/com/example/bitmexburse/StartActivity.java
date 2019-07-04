@@ -1,14 +1,20 @@
 package com.example.bitmexburse;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -22,7 +28,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,7 +55,13 @@ public class StartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimerTask timerTask;
-
+    final Context context = this;
+    String usdstr = "";
+    String eurstr = "";
+    String xbtstr = "";
+    String xbtu19str = "";
+    String xbt7_u105str = "";
+    String xbtz19str = "";
     //xbt const
     String databit = "";
     String dataParsedbit = "";
@@ -86,7 +101,7 @@ public class StartActivity extends AppCompatActivity
         final TextView usd = findViewById(R.id.usd);
         final TextView eur = findViewById(R.id.eur);
         String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-        name_of_burse.setText("Биржа на "+mydate);
+        name_of_burse.setText("Последнее обновление "+mydate.substring(0,mydate.length()-3));
         //get-request_for_bitcoin
         Timer timer = new Timer();
         timerTask = new TimerTask() {
@@ -127,6 +142,7 @@ public class StartActivity extends AppCompatActivity
                                     }
                                     xbt.setText("");
                                     xbt.setText(dataParsedbit);
+                                    xbtstr = singleParsedbit;
                                     }
                                 });
                             }
@@ -169,6 +185,7 @@ public class StartActivity extends AppCompatActivity
                                     }
                                     xbtu19.setText("");
                                     xbtu19.setText(dataParsedbit19);
+                                    xbtu19str = singleParsedbit19;
                                 }
                             });
                         }
@@ -210,6 +227,7 @@ public class StartActivity extends AppCompatActivity
                                     }
                                     xbtz19.setText("");
                                     xbtz19.setText(dataParsedbitz19);
+                                    xbtz19str = singleParsedbitz19;
                                 }
                             });
                         }
@@ -251,6 +269,7 @@ public class StartActivity extends AppCompatActivity
                                     }
                                     xbt7_u105.setText("");
                                     xbt7_u105.setText(dataParsedbit105);
+                                    xbt7_u105str = singleParsedbit105;
                                 }
                             });
                         }
@@ -296,6 +315,7 @@ public class StartActivity extends AppCompatActivity
                                     }
                                     usd.setText("");
                                     usd.setText(dataParsedusd);
+                                    usdstr = singleParsedusd;
                                 }
                             });
                         }
@@ -340,6 +360,7 @@ public class StartActivity extends AppCompatActivity
                                     }
                                     eur.setText("");
                                     eur.setText(dataParsedeur);
+                                    eurstr = singleParsedeur;
                                 }
                             });
                         }
@@ -355,6 +376,102 @@ public class StartActivity extends AppCompatActivity
             }
         };
         timer.schedule(timerTask,0,100000);
+        //usd onclick
+        usd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.prompt, null);
+                final AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context);
+                mDialogBuilder.setView(promptsView);
+                final EditText userInput = promptsView.findViewById(R.id.input_text);
+                final TextView result  = promptsView.findViewById(R.id.tetxprint);
+                final TextView text = promptsView.findViewById(R.id.tv);
+                text.setText("Введите количество USD для конвертации по биржевому курсу:");
+                mDialogBuilder.setCancelable(false);
+                userInput.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length()!=0){
+                            String str = userInput.getText().toString();
+                            Float res1 = Float.parseFloat(str);
+                            Float res = Float.parseFloat(usdstr)*res1;
+                            result.setText(res.toString()+"\u20BD");
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+                mDialogBuilder.setCancelable(true).setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = mDialogBuilder.create();
+                alertDialog.show();
+
+            }
+        });
+
+        eur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.prompt, null);
+                final AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context);
+                mDialogBuilder.setView(promptsView);
+                final EditText userInput = promptsView.findViewById(R.id.input_text);
+                final TextView result  = promptsView.findViewById(R.id.tetxprint);
+                final TextView text = promptsView.findViewById(R.id.tv);
+                text.setText("Введите количество EUR для конвертации по биржевому курсу:");
+                mDialogBuilder.setCancelable(false);
+                userInput.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length()!=0){
+                            String str = userInput.getText().toString();
+                            Float res1 = Float.parseFloat(str);
+                            Float res = Float.parseFloat(eurstr)*res1;
+                            result.setText(res.toString()+"\u20BD");
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+                mDialogBuilder.setCancelable(true).setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = mDialogBuilder.create();
+                alertDialog.show();
+
+            }
+        });
         //Endinggetrequest_bitcoin
         //https://currate.ru/api/?get=rates&pairs=USDRUB&key=92b43dfd78329b5554d0e5471b4b6d0c
 
@@ -396,10 +513,7 @@ public class StartActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //noinspection SimplifiableIfStatemen
 
         return super.onOptionsItemSelected(item);
     }

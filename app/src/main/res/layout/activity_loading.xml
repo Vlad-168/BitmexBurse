@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:background="@drawable/back"
     android:layout_height="match_parent"
-    tools:context=".RenderActivity">
+    tools:context=".LoadingActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"/>
 
-    <include layout="@layout/content_render" />
+    <include layout="@layout/content_loading" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="53dp"
-        android:layout_height="59dp"
-        app:srcCompat="@drawable/menu_icon" />
-
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/load" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

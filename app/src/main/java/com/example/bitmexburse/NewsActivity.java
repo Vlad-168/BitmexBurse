@@ -1,5 +1,8 @@
 package com.example.bitmexburse;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -9,21 +12,58 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageButton;
 
+class SimpleWebViewClientImpl1 extends WebViewClient {
+
+    private Activity activity = null;
+
+    public SimpleWebViewClientImpl1(Activity activity) {
+        this.activity = activity;
+    }
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView webView, String url) {
+        if (url.contains("blog.bitmex.com")) {
+            return false;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        activity.startActivity(intent);
+        return true;
+    }
+}
 public class NewsActivity extends AppCompatActivity {
-
+    ImageButton btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_news);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        btn = findViewById(R.id.imageButton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent menu = new Intent(NewsActivity.this ,StartActivity.class);
+                startActivity(menu);
+            }
+        });
+        WebView web = findViewById(R.id.webview);
 
+        WebSettings webSettings = web.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 
-
-
-
+        SimpleWebViewClientImpl1 webViewClient1 = new SimpleWebViewClientImpl1(this);
+        web.setWebViewClient(webViewClient1);
+        web.loadUrl("https://blog.bitmex.com");
     }
 
 }
