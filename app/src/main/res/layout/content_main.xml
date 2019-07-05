@@ -8,6 +8,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".StartActivity"
     tools:showIn="@layout/app_bar_main">
+
     <TextView
         android:id="@+id/name_of_burse"
         android:layout_width="match_parent"

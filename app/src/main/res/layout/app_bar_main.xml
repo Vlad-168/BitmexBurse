@@ -17,8 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#00BFFF"
-            app:titleTextColor="@android:color/black"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@android:color/black">
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="59dp"
+                android:layout_height="59dp"
+                android:background="#00FFFFFF"
+                app:srcCompat="@drawable/menu_icon" />
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

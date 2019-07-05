@@ -32,6 +32,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +102,14 @@ public class StartActivity extends AppCompatActivity
         final TextView xbtz19 = findViewById(R.id.xbtz19);
         final TextView xbt7_u105 = findViewById(R.id.xbt7_u105);
         //My code
+        ImageButton imgbtn = findViewById(R.id.imageButton3);
+        imgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent fer = new Intent(StartActivity.this, MyMenuActivity.class);
+                startActivity(fer);
+            }
+        });
         TextView name_of_burse = findViewById(R.id.name_of_burse);
         final TextView usd = findViewById(R.id.usd);
         final TextView eur = findViewById(R.id.eur);
@@ -485,12 +494,12 @@ public class StartActivity extends AppCompatActivity
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        //NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+        //navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -69,7 +71,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_dashboard, null, false);
     }
 
 
@@ -108,5 +110,41 @@ public class DashboardFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        CardView cardtop = view.findViewById(R.id.cardTop);
+        CardView cardright = view.findViewById(R.id.cardRight);
+        CardView cardnews = view.findViewById(R.id.cardLeft);
+        CardView cardwww = view.findViewById(R.id.cardView2);
+        cardtop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent valutecharts = new Intent(getContext(),StartActivity.class);
+                getActivity().startActivity(valutecharts);
+            }
+        });
+        cardright.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent charts = new Intent(getContext(),GraphicsActivity.class);
+                getActivity().startActivity(charts);
+            }
+        });
+        cardnews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent news = new Intent(getContext(),NewsActivity.class);
+                getActivity().startActivity(news);
+            }
+        });
+        cardwww.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent www = new Intent(getContext(),RenderActivity.class);
+                getActivity().startActivity(www);
+            }
+        });
 
+    }
 }

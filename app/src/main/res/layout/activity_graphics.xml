@@ -18,7 +18,16 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#00BFFF"
             app:titleTextColor="@android:color/black"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <ImageButton
+                android:id="@+id/imgbtn"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:background="#00FFFFFF"
+                app:srcCompat="@drawable/menu_icon" />
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

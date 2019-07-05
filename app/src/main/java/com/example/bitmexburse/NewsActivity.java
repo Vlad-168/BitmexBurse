@@ -36,7 +36,7 @@ public class NewsActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent menu = new Intent(NewsActivity.this, StartActivity.class);
+                Intent menu = new Intent(NewsActivity.this, MyMenuActivity.class);
                 startActivity(menu);
             }
         });

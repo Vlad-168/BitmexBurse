@@ -52,7 +52,7 @@ public class RenderActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent menu = new Intent(RenderActivity.this ,StartActivity.class);
+                Intent menu = new Intent(RenderActivity.this ,MyMenuActivity.class);
                 startActivity(menu);
             }
         });
