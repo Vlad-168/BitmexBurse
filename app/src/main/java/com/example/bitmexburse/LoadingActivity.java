@@ -36,7 +36,7 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent home = new Intent(LoadingActivity.this, StartActivity.class);
+                Intent home = new Intent(LoadingActivity.this, MyMenuActivity.class);
                 startActivity(home);
                 finish();
             }

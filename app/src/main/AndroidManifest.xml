@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MyMenuActivity"
+            android:label="@string/title_activity_my_menu"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".LoadingActivity"
             android:label="BitmexBurse"
             android:theme="@style/AppTheme.NoActionBar">
@@ -36,8 +40,7 @@
         <activity
             android:name=".StartActivity"
             android:label="BitmexBurse"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
